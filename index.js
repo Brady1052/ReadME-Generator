@@ -1,25 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-function generateHTML() {
-    return `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ReadME.md Generator</title>
-    </head>
-    
-    <header><h1> </h1></header>
-    
-    <body>
-        
-    </body>
-    </html>`;
-}
-
-
 inquirer
   .prompt([
     {
@@ -59,9 +40,9 @@ inquirer
         name: 'license'
     }
   ])
-  .then((answers)=>{
+  .then((answers) => {
 console.log(answers);
-fs.writeFIle("index.html", generateHTML(),"utf-8", (err) =>{
+fs.writeFile("index.html", generateHtml(answers),"utf-8", (err) =>{
    if(err) {
    console.log(err);
    }
@@ -70,3 +51,38 @@ fs.writeFIle("index.html", generateHTML(),"utf-8", (err) =>{
 
 
   });
+
+  function generateHtml({title,description,installation,usage,guidelines,testing,license}) {
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ReadME.md Generator</title>
+    </head>
+    
+    <header><h1>${title}</h1></header>
+    
+    <body>
+    <h1> Description </h1>
+    <p>${description}</p>
+    
+    <h1> Installation </h1>
+    <p> ${installation} </p>
+
+    <h1> How to use  </h1>
+    <p> ${usage} </p>
+
+    <h1> Guidelines </h1>
+    <p> ${guidelines} </p>
+
+    <h1> Testing </h1>
+    <p> ${testing} </p>
+
+    <h1> License </h1>
+    <p> ${license} </p>
+
+    </body>
+    </html>`
+  }
