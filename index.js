@@ -4,6 +4,16 @@ const fs = require("fs");
 inquirer
     .prompt([
         {
+        type: 'input',
+        message: "What is your GitHub username?",
+        name: 'username',
+    },
+    {
+        type: 'input',
+        message: "What is your email address?",
+        name: 'email',
+    },
+        {
             type: 'input',
             message: 'What is the title of your project?',
             name: 'title',
@@ -42,7 +52,7 @@ inquirer
     ])
     .then((answers) => {
         console.log(answers);
-        fs.writeFile("index.html", generateHtml(answers), "utf-8", (err) => {
+        fs.writeFile("README.md", generateReadMe(answers), "utf-8", (err) => {
             if (err) {
                 console.log(err);
             }
@@ -52,19 +62,9 @@ inquirer
 
     });
 
-function generateHtml({ title, description, installation, usage, guidelines, testing, license }) {
-    return `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ReadME.md Generator</title>
-    </head>
-    
+function generateReadMe({ title, description, installation, usage, guidelines, testing, license, username, email }) {
+    return `
 
-    
-    <body>
    ## Title
     ${title}
     
@@ -86,6 +86,9 @@ function generateHtml({ title, description, installation, usage, guidelines, tes
    ##  Testing 
    ${testing} 
 
-    </body>
-    </html>`
+   ## Questions
+   GitHub Username: ${username}
+   Link to my GitHub Profile: https://github.com/${username}
+   If you are interested in contacting me feel free to email me at: ${email}
+`
 }
